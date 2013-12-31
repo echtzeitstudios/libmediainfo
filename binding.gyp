@@ -1,63 +1,38 @@
 {
-
   "targets": [
     {
       "target_name": "binding",
       'include_dirs': [ 
         'deps/mediainfo', 
-        'deps/mediainfo/Video',
-        'deps/mediainfo/ThirdParty/tinyxml',
+        'deps/mediainfo/ThirdParty/tinyxml2',
         'deps/mediainfo/ThirdParty/base64',
         'deps/mediainfo/ThirdParty/md5',
-        'deps/mediainfo/Text',
-        'deps/mediainfo/Tag',
-        'deps/mediainfo/Multiple',
-        'deps/mediainfo/Reader',
-        'deps/mediainfo/Image',
-        'deps/mediainfo/Export',
-        'deps/mediainfo/Duplicate',
-        'deps/mediainfo/Audio',
-        'deps/mediainfo/Archive',
         'deps/zenlib',
-        'deps/zenlib/Format/Html' 
-        'deps/zenlib/Format/Http' 
-        'deps/zenlib/HTTP_Client' 
+      ],
+      'defines': [
+        'STDC_HEADERS=1', 
+        'HAVE_SYS_TYPES_H=1', 
+        'HAVE_SYS_STAT_H=1', 
+        'HAVE_STDLIB_H=1', 
+        'HAVE_STRING_H=1', 
+        'HAVE_MEMORY_H=1', 
+        'HAVE_STRINGS_H=1', 
+        'HAVE_INTTYPES_H=1', 
+        'HAVE_STDINT_H=1', 
+        'HAVE_UNISTD_H=1', 
+        'HAVE_DLFCN_H=1', 
+        'HAVE_ZLIB_H=1', 
+        'UNICODE', 
+        'SIZE_T_IS_LONG', 
+        'MEDIAINFO_LIBCURL_NO', 
+        'MEDIAINFO_LIBMMS_NO' 
       ],
       'dependencies': [
         'deps/zenlib/libzen.gyp:libzen',
         'deps/mediainfo/libmediainfo.gyp:libmediainfo'
       ],
+      'cflags_cc': [ '-g -O2 -arch x86_64 -fPIC -c' ],
       "sources": [ "src/binding.cc" ],
-      "conditions": [
-            ["OS == 'mac'", {
-                "xcode_settings": {
-                    "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
-                    "OTHER_CFLAGS": [
-                        "-g",
-                        "-mmacosx-version-min=10.7",
-                        '-std=c++11',
-                        "-stdlib=libc++",
-                        "-O3",
-                        "-D__STDC_CONSTANT_MACROS",
-                        "-D_FILE_OFFSET_BITS=64",
-                        "-D_LARGEFILE_SOURCE",
-                        "-Wall"
-                    ],
-                    "OTHER_CPLUSPLUSFLAGS": [
-                        "-g",
-                        "-mmacosx-version-min=10.7",
-                        '-std=c++11',
-                        "-stdlib=libc++",
-                        "-O3",
-                        "-D__STDC_CONSTANT_MACROS",
-                        "-D_FILE_OFFSET_BITS=64",
-                        "-D_LARGEFILE_SOURCE",
-                        "-Wall"
-                    ]
-                }
-            }]
-        ]
-
     }
   ]
 }
