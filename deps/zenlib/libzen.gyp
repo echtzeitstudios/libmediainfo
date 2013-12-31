@@ -3,7 +3,12 @@
     {
       'target_name': 'libzen',
       'type': 'static_library',
-      'include_dirs': [ '.' ],
+      'include_dirs': [ 
+        '.',
+        'Format/Html',
+        'Format/Http',
+        'HTTP_Client'
+      ],
       'defines': [
         'PACKAGE_NAME="libzen"',
         'PACKAGE_TARNAME="libzen"',
@@ -28,7 +33,7 @@
         '_FILE_OFFSET_BITS=64',
         'SIZE_T_IS_LONG'
       ],
-      'cflags_cc': [ '-g -O2 -arch x86_64 -fPIC -c' ],
+      # 'cflags_cc': [ '-g -O2 -arch x86_64 -fPIC -c' ],
       'sources': [
         'Conf.cpp',
         'CriticalSection.cpp',
@@ -54,6 +59,35 @@
         'Format/Http/Http_Request.cpp',
         'Format/Http/Http_Utils.cpp'
       ],
+      "conditions": [
+            ["OS == 'mac'", {
+                "xcode_settings": {
+                    "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
+                    "OTHER_CFLAGS": [
+                        "-g",
+                        "-mmacosx-version-min=10.7",
+                        "-std=c++11",
+                        "-stdlib=libc++",
+                        "-O3",
+                        "-D__STDC_CONSTANT_MACROS",
+                        "-D_FILE_OFFSET_BITS=64",
+                        "-D_LARGEFILE_SOURCE",
+                        "-Wall"
+                    ],
+                    "OTHER_CPLUSPLUSFLAGS": [
+                        "-g",
+                        "-mmacosx-version-min=10.7",
+                        "-std=c++11",
+                        "-stdlib=libc++",
+                        "-O3",
+                        "-D__STDC_CONSTANT_MACROS",
+                        "-D_FILE_OFFSET_BITS=64",
+                        "-D_LARGEFILE_SOURCE",
+                        "-Wall"
+                    ]
+                }
+            }]
+        ]
     },
   ]
 }

@@ -3,7 +3,30 @@
     {
       'target_name': 'libmediainfo',
       'type': 'static_library',
-      'include_dirs': [ '.', 'SLL', 'ThirdParty/md5', 'ThirdParty/tinyxml2', 'ThirdParty/base64', '../zenlib' ],
+      'include_dirs': [ 
+        '.', 
+        'DLL', 
+        'ThirdParty/md5', 
+        'ThirdParty/tinyxml2', 
+        'ThirdParty/base64', 
+        'Video',
+        'ThirdParty/tinyxml',
+        'ThirdParty/base64',
+        'ThirdParty/md5',
+        'Text',
+        'Tag',
+        'Multiple',
+        'Reader',
+        'Image',
+        'Export',
+        'Duplicate',
+        'Audio',
+        'Archive',
+        '../zenlib',
+        '../zenlib/Format/Html', 
+        '../zenlib/Format/Http',
+        '../zenlib/HTTP_client'
+      ],
       'dependencies': [ '../zenlib/libzen.gyp:libzen' ],
       'defines': [
         'PACKAGE="libmediainfo"', 
@@ -24,7 +47,7 @@
         'MEDIAINFO_LIBCURL_NO', 
         'MEDIAINFO_LIBMMS_NO' 
       ],
-      'cflags_cc': [ '-g -O2 -arch x86_64 -fPIC -c' ],
+      # 'cflags_cc': [ '-g -O2 -arch x86_64 -fPIC -c' ],
       'sources': [
         'File__Analyze.cpp',
         'File__Analyze_Buffer.cpp',
@@ -218,6 +241,36 @@
         'ThirdParty/md5/md5.c',
         'ThirdParty/tinyxml2/tinyxml2.cpp'
       ],
+      "conditions": [
+            ["OS == 'mac'", {
+                "xcode_settings": {
+                    "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
+                    "OTHER_CFLAGS": [
+                        "-g",
+                        "-mmacosx-version-min=10.7",
+                        # '-std=c++11',
+                        "-stdlib=libc++",
+                        "-O3",
+                        "-D__STDC_CONSTANT_MACROS",
+                        "-D_FILE_OFFSET_BITS=64",
+                        "-D_LARGEFILE_SOURCE",
+                        "-Wall"
+                    ],
+                    "OTHER_CPLUSPLUSFLAGS": [
+                        "-g",
+                        "-mmacosx-version-min=10.7",
+                        # '-std=c++11',
+                        "-stdlib=libc++",
+                        "-O3",
+                        "-D__STDC_CONSTANT_MACROS",
+                        "-D_FILE_OFFSET_BITS=64",
+                        "-D_LARGEFILE_SOURCE",
+                        "-Wall"
+                    ]
+                }
+            }]
+        ]
+
     },
   ]
 }
