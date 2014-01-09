@@ -8,6 +8,8 @@
         'deps/mediainfo/ThirdParty/base64',
         'deps/mediainfo/ThirdParty/md5',
         'deps/zenlib',
+        "<!(node -e \"require('nan')\")",
+        "src"
       ],
       'defines': [
         'STDC_HEADERS=1', 
@@ -32,7 +34,7 @@
         'deps/mediainfo/libmediainfo.gyp:libmediainfo'
       ],
       'cflags_cc': [ '-g -O2 -arch x86_64 -fPIC -c' ],
-      "sources": [ "src/binding.cc" ],
+      "sources": [ "src/binding.cc", "src/mediainfo.cc" ],
     }
   ]
 }
