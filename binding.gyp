@@ -38,7 +38,7 @@
         'deps/zenlib/libzen.gyp:libzen',
         'deps/mediainfo/libmediainfo.gyp:libmediainfo'
       ],
-      'cflags_cc': [ '-g -O2 -arch x86_64 -fPIC -c' ],
+      'cflags_cc': [ '-g', '-O2', '-fPIC', '-c' ],
       "sources": [ "src/binding.cc", "src/mediainfo.cc" ],
     }
   ]
