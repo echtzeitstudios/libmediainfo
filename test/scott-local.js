@@ -1,4 +1,4 @@
-var medi = require("./lib/index");
+var medi = require("../lib/index");
 var fs = require("fs");
 
 var med = new medi({});

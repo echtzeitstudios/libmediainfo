@@ -34,8 +34,9 @@ Handle<Value> NativeMediaInfo::New(const Arguments& args) {
 
     obj->medinfo = &hand;
     obj->medinfo->Option(__T("Info_Version"), __T("0.7.65;libmediainfo-native;0.0.1"));
-    obj->medinfo->Option(__T("File_IsSeekable"), __T("0"));
+    obj->medinfo->Option(__T("Demux"), __T("All"));
     obj->medinfo->Open_Buffer_Init();
+    obj->medinfo->Option(__T("File_IsSeekable"), __T("0"));
     
     obj->Wrap(args.This());
     NanReturnValue(args.This());
@@ -49,9 +50,10 @@ Handle<Value> NativeMediaInfo::Feed(const Arguments& args) {
     // return undef to keep feeding
     NativeMediaInfo* obj = ObjectWrap::Unwrap<NativeMediaInfo>(args.This());
 
+    const unsigned char* buf = (unsigned char*)node::Buffer::Data(args[0]);
     size_t test = obj->medinfo->Open_Buffer_Continue(
-        (const ZenLib::int8u*)node::Buffer::Data(args[0]), 
-        (size_t)node::Buffer::Length(args[0]) 
+        buf, 
+        node::Buffer::Length(args[0]) 
     );
     
     if( test & 0x01 ) {

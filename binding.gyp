@@ -27,7 +27,12 @@
         'UNICODE', 
         'SIZE_T_IS_LONG', 
         'MEDIAINFO_LIBCURL_NO', 
-        'MEDIAINFO_LIBMMS_NO' 
+        'MEDIAINFO_LIBMMS_NO',
+        'MEDIAINFO_DEMUX_YES',
+        'MEDIAINFO_NEXTPACKET_YES',
+        'MEDIAINFO_ADVANCED_YES',
+        'MEDIAINFO_MD5_YES',
+        'MEDIAINFO_EVENTS_YES'
       ],
       'dependencies': [
         'deps/zenlib/libzen.gyp:libzen',
