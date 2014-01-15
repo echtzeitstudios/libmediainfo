@@ -14,19 +14,22 @@ using namespace v8;
 NativeMediaInfo::NativeMediaInfo() {};
 NativeMediaInfo::~NativeMediaInfo() {};
 
+static Persistent<Function> nativemediainfo_constructor;
+
 void NativeMediaInfo::Init(Handle<Object> target){
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("NativeMediaInfo"));
+  tpl->SetClassName(NanSymbol("NativeMediaInfo"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("feed"),
+  tpl->PrototypeTemplate()->Set(NanSymbol("feed"),
       FunctionTemplate::New(Feed)->GetFunction());
 
-  Persistent<Function> constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("NativeMediaInfo"), constructor);
+  Local<Function> constructor = tpl->GetFunction();
+  NanAssignPersistent(Function, nativemediainfo_constructor, constructor);
+  target->Set(NanSymbol("NativeMediaInfo"), constructor);
 }
 
-Handle<Value> NativeMediaInfo::New(const Arguments& args) {
+NAN_METHOD(NativeMediaInfo::New) {
     NanScope();
 
     NativeMediaInfo* obj = new NativeMediaInfo();
@@ -42,7 +45,7 @@ Handle<Value> NativeMediaInfo::New(const Arguments& args) {
     NanReturnValue(args.This());
 }
 
-Handle<Value> NativeMediaInfo::Feed(const Arguments& args) {
+NAN_METHOD(NativeMediaInfo::Feed) {
     NanScope();
 
     assert(Buffer::HasInstance(args[0]));

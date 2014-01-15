@@ -30,7 +30,7 @@
         '_FILE_OFFSET_BITS=64',
         'SIZE_T_IS_LONG'
       ],
-      'cflags_cc': [ '-g -O2 -arch x86_64 -fPIC -c' ],
+      'cflags_cc': [ '-g -O2 -fPIC -c' ],
       'sources': [
         'Conf.cpp',
         'CriticalSection.cpp',

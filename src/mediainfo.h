@@ -12,8 +12,8 @@ class NativeMediaInfo : public node::ObjectWrap {
   NativeMediaInfo();
   ~NativeMediaInfo();
 
-  static v8::Handle<v8::Value> New(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Feed(const v8::Arguments& args);
+  static NAN_METHOD(New);
+  static NAN_METHOD(Feed);
 
   MediaInfoLib::MediaInfo *medinfo;
 };
