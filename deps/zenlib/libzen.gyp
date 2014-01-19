@@ -30,7 +30,8 @@
         '_FILE_OFFSET_BITS=64',
         'SIZE_T_IS_LONG'
       ],
-      'cflags_cc': [ '-g -O2 -fPIC -c' ],
+      'cflags_cc': [ '-g -O2 -fPIC' ],
+      'ldflags_cc': [ '-DUNICODE -DSIZE_T_IS_LONG -fPIC -g -lz -lpthread =lstdc++' ],
       'sources': [
         'Conf.cpp',
         'CriticalSection.cpp',

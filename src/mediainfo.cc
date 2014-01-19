@@ -33,13 +33,11 @@ NAN_METHOD(NativeMediaInfo::New) {
     NanScope();
 
     NativeMediaInfo* obj = new NativeMediaInfo();
-    MediaInfoLib::MediaInfo hand;
 
-    obj->medinfo = &hand;
+    obj->medinfo = new MediaInfoLib::MediaInfo();
     obj->medinfo->Option(__T("Info_Version"), __T("0.7.65;libmediainfo-native;0.0.1"));
-    obj->medinfo->Option(__T("Demux"), __T("All"));
-    obj->medinfo->Open_Buffer_Init();
     obj->medinfo->Option(__T("File_IsSeekable"), __T("0"));
+    obj->medinfo->Open_Buffer_Init();
     
     obj->Wrap(args.This());
     NanReturnValue(args.This());
@@ -59,32 +57,50 @@ NAN_METHOD(NativeMediaInfo::Feed) {
         node::Buffer::Length(args[0]) 
     );
     
-    if( test & 0x01 ) {
+    if( test == 0 ) {
         // we're complete... info should be around
         obj->medinfo->Open_Buffer_Finalize();
 
         Local<Object> retobj = Object::New();
-/*
-        for (size_t StreamKind=MediaInfoLib::Stream_General; StreamKind<MediaInfoLib::Stream_Max; StreamKind++) {
+        for (size_t StreamKind=MediaInfoLib::Stream_General; StreamKind < MediaInfoLib::Stream_Max; StreamKind++) {
             Local<Array> arr = Array::New();
+            std::wstring StreamKindName = obj->medinfo->Get((MediaInfoLib::stream_t)StreamKind, 0, L"StreamKind");
+
+            std::wcout << StreamKindName << "\n";
+
+            char stream_kind_name_buf[ StreamKindName.size() ];
+            wcstombs(stream_kind_name_buf, StreamKindName.c_str(), sizeof(stream_kind_name_buf));
             retobj->Set(
-                String::New((char*)obj->medinfo->Get((MediaInfoLib::stream_t)StreamKind, 0, __T("StreamKind/String")).c_str()), 
+                String::New(stream_kind_name_buf, sizeof(stream_kind_name_buf)), 
                 arr
-            ); 
-            for (size_t StreamPos=0; StreamPos<obj->medinfo->Count_Get((MediaInfoLib::stream_t)StreamKind); StreamPos++) {
+            );
+
+            for (size_t StreamPos=0; StreamPos < (size_t)obj->medinfo->Count_Get((MediaInfoLib::stream_t)StreamKind); StreamPos++) {
                 Local<Object> info = Object::New();
                 arr->Set(StreamPos, info);
-                for (size_t ParameterPos=0; ParameterPos<obj->medinfo->Count_Get((MediaInfoLib::stream_t)StreamKind, StreamPos); StreamPos++)
+                for (size_t ParameterPos=0; ParameterPos < (size_t)obj->medinfo->Count_Get((MediaInfoLib::stream_t)StreamKind, StreamPos); ParameterPos++)
                 {
+                    std::wstring Key = obj->medinfo->Get((MediaInfoLib::stream_t)StreamKind, StreamPos, ParameterPos, MediaInfoLib::Info_Name);
+                    std::wstring Val = obj->medinfo->Get((MediaInfoLib::stream_t)StreamKind, StreamPos, ParameterPos, MediaInfoLib::Info_Text);
+
+                    char key_buf[ Key.size() ];
+                    char val_buf[ Val.size() ];
+                    wcstombs(key_buf, Key.c_str(), sizeof(key_buf));
+                    wcstombs(val_buf, Val.c_str(), sizeof(val_buf));
+                    if(sizeof(val_buf) == 0){
+                        continue;
+                    }
                     info->Set(
-                        String::New((char*)obj->medinfo->Get((MediaInfoLib::stream_t)StreamKind, StreamPos, ParameterPos, MediaInfoLib::Info_Name).c_str()),
-                        String::New((char*)obj->medinfo->Get((MediaInfoLib::stream_t)StreamKind, StreamPos, ParameterPos, MediaInfoLib::Info_Text).c_str())
+                        String::New(key_buf, sizeof(key_buf)),
+                        String::New(val_buf, sizeof(val_buf))
                     );
                 }
             }
         }
-*/
-        NanReturnValue(scope.Close(retobj));
+
+        delete obj->medinfo;
+
+        NanReturnValue(retobj);
     } else {
         // keep going!
         NanReturnUndefined();

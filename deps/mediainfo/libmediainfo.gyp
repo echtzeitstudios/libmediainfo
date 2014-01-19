@@ -36,7 +36,8 @@
         'MEDIAINFO_DVDIF_ANALYZE_YES=1',
         'MEDIAINFO_NEXTPACKET_YES=1',
       ],
-      'cflags_cc': [ '-g -O2 -fPIC -fexceptions' ],
+      'ldflags_cc': [ '-DUNICODE -DSIZE_T_IS_LONG -fPIC -g -lz -lpthread -lstdc++' ],
+      'cflags_cc': [ '-g -O2 -fPIC' ],
       'ldflags_cc': [ '-DUNICODE -DSIZE_T_IS_LONG -fPIC -g -lz -lpthread -lstdc++' ],
       'sources': [
         'MediaInfo/File__Analyze.cpp',

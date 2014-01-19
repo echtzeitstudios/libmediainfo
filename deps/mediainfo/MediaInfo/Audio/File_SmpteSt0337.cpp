@@ -14,6 +14,7 @@
 
 //---------------------------------------------------------------------------
 #include "MediaInfo/Setup.h"
+#include "MediaInfo/MediaInfo_Config_MediaInfo.h"
 //---------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------
@@ -574,7 +575,7 @@ bool File_SmpteSt0337::Synchronize()
             }
         }
 
-        if (Container_Bits && Aligned)
+        if (Container_Bits>=4 && Aligned)
             Buffer_Offset+=Container_Bits/4;
         else
             Buffer_Offset++;

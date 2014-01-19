@@ -28,17 +28,18 @@
         'SIZE_T_IS_LONG', 
         'MEDIAINFO_LIBCURL_NO', 
         'MEDIAINFO_LIBMMS_NO',
-        'MEDIAINFO_DEMUX_YES',
-        'MEDIAINFO_NEXTPACKET_YES',
-        'MEDIAINFO_ADVANCED_YES',
-        'MEDIAINFO_MD5_YES',
-        'MEDIAINFO_EVENTS_YES'
+        'MEDIAINFO_DEMUX_YES=1',
+        'MEDIAINFO_EVENTS_YES=1' 
+        'MEDIAINFO_MINIMIZESIZE=1', 
+        'MEDIAINFO_MINIMAL_YES=1', 
+        'MEDIAINFO_DVDIF_ANALYZE_YES=1',
+        'MEDIAINFO_NEXTPACKET_YES=1'
       ],
       'dependencies': [
         'deps/zenlib/libzen.gyp:libzen',
         'deps/mediainfo/libmediainfo.gyp:libmediainfo'
       ],
-      'cflags_cc': [ '-g', '-O2', '-fPIC', '-c' ],
+      'cflags_cc': [ '-g -O2 -fPIC' ],
       "sources": [ "src/binding.cc", "src/mediainfo.cc" ],
     }
   ]

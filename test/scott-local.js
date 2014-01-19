@@ -15,7 +15,7 @@ vid.on("open", function(){
 });
 
 med.on("finished", function(retobj) {
-  console.dir(retobj);
+  console.dir(retobj, { depth: null });
   process.exit(0);
 });
 
