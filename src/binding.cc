@@ -1,5 +1,6 @@
 #include <node.h>
 
+#include <nan.h>
 #include "mediainfo.h"
 
 using namespace v8;
