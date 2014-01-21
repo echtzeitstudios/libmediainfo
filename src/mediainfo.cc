@@ -37,6 +37,8 @@ NAN_METHOD(NativeMediaInfo::New) {
     obj->medinfo = new MediaInfoLib::MediaInfo();
     obj->medinfo->Option(__T("Info_Version"), __T("0.7.65;libmediainfo-native;0.0.1"));
     obj->medinfo->Option(__T("File_IsSeekable"), __T("0"));
+    obj->medinfo->Option(__T("Thread"), __T("1"));
+    obj->medinfo->Option(__T("Demux"), __T("all"));
     obj->medinfo->Open_Buffer_Init();
     
     obj->Wrap(args.This());
@@ -57,15 +59,17 @@ NAN_METHOD(NativeMediaInfo::Feed) {
         node::Buffer::Length(args[0]) 
     );
     
-    if( test == 0 ) {
+    if( test != 0 ) {
         // we're complete... info should be around
-        obj->medinfo->Open_Buffer_Finalize();
 
         Local<Object> retobj = Object::New();
         for (size_t StreamKind=MediaInfoLib::Stream_General; StreamKind < MediaInfoLib::Stream_Max; StreamKind++) {
             Local<Array> arr = Array::New();
             std::wstring StreamKindName = obj->medinfo->Get((MediaInfoLib::stream_t)StreamKind, 0, L"StreamKind");
 
+            if(!StreamKindName.size()){
+                continue;
+            }
             std::wcout << StreamKindName << "\n";
 
             char stream_kind_name_buf[ StreamKindName.size() ];
@@ -98,6 +102,7 @@ NAN_METHOD(NativeMediaInfo::Feed) {
             }
         }
 
+        obj->medinfo->Open_Buffer_Finalize();
         delete obj->medinfo;
 
         NanReturnValue(retobj);

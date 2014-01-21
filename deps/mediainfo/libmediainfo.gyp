@@ -27,16 +27,7 @@
         'HAVE_ZLIB_H=1', 
         'UNICODE', 
         'SIZE_T_IS_LONG', 
-        'MEDIAINFO_LIBCURL_NO', 
-        'MEDIAINFO_LIBMMS_NO',
-        'MEDIAINFO_DEMUX_YES=1',
-        'MEDIAINFO_EVENTS_YES=1' 
-        'MEDIAINFO_MINIMIZESIZE=1', 
-        'MEDIAINFO_MINIMAL_YES=1', 
-        'MEDIAINFO_DVDIF_ANALYZE_YES=1',
-        'MEDIAINFO_NEXTPACKET_YES=1',
       ],
-      'ldflags_cc': [ '-DUNICODE -DSIZE_T_IS_LONG -fPIC -g -lz -lpthread -lstdc++' ],
       'cflags_cc': [ '-g -O2 -fPIC' ],
       'ldflags_cc': [ '-DUNICODE -DSIZE_T_IS_LONG -fPIC -g -lz -lpthread -lstdc++' ],
       'sources': [
